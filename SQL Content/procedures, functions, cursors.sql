@@ -67,81 +67,29 @@ DELIMITER ;
 
 -- Use the function
 SELECT GetFullName(1) AS FullName;
-
--- Cursor: List Employees with Salaries Above a Certain Amount
 DELIMITER //
 
-CREATE PROCEDURE ListHighEarners(IN minSalary DECIMAL(10,2))
+CREATE PROCEDURE ListEmployees()
 BEGIN
-    DECLARE done INT DEFAULT 0;
-    DECLARE empID INT;
+    DECLARE done INT DEFAULT FALSE;
     DECLARE empFirstName VARCHAR(50);
     DECLARE empLastName VARCHAR(50);
-    DECLARE empSalary DECIMAL(10,2);
-    
-    DECLARE cur CURSOR FOR 
-    SELECT EmployeeID, FirstName, LastName, Salary 
-    FROM Employees 
-    WHERE Salary > minSalary;
-    
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-    
+    DECLARE cur CURSOR FOR SELECT FirstName, LastName FROM Employees;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
     OPEN cur;
-    
+
     read_loop: LOOP
-        FETCH cur INTO empID, empFirstName, empLastName, empSalary;
+        FETCH cur INTO empFirstName, empLastName;
         IF done THEN
             LEAVE read_loop;
         END IF;
-        SELECT empID AS 'Employee ID', 
-               empFirstName AS 'First Name', 
-               empLastName AS 'Last Name', 
-               empSalary AS 'Salary';
+        SELECT empFirstName, empLastName;
     END LOOP;
-    
+
     CLOSE cur;
 END //
 
 DELIMITER ;
 
--- Call the procedure
-CALL ListHighEarners(55000);
 
--- Drop the database to clean up
--- DROP DATABASE PracticeDB;
-
-DELIMITER //
-
-CREATE PROCEDURE ListHighEarners(IN minSalary DECIMAL(10,2))
-BEGIN
-    DECLARE done INT DEFAULT 0;
-    DECLARE empID INT;
-    DECLARE empFirstName VARCHAR(50);
-    DECLARE empLastName VARCHAR(50);
-    DECLARE empSalary DECIMAL(10,2);
-    
--- Declare the cursor to select employees with salary above the given amount
-DECLARE cur CURSOR FOR 
-SELECT EmployeeID, FirstName, LastName, Salary 
-FROM Employees 
-WHERE Salary > minSalary;
-
- -- Declare a handler for the end of the result set
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-    
--- Open the cursor
-OPEN cur;
-    
--- Loop to fetch each row from the cursor
-read_loop: LOOP
-FETCH cur INTO empID, empFirstName, empLastName, empSalary;
-IF done THEN
-LEAVE read_loop;
-END IF;
-
--- Display the fetched row
-SELECT empID AS 'Employee ID', 
-empFirstName AS 'First Name', 
-empLastName AS 'Last Name', 
-empSalary AS 'Salary';
-    END LOOP;
