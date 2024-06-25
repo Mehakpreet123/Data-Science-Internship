@@ -1,0 +1,765 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "9cfa5461",
+   "metadata": {},
+   "source": [
+    "# np array and basic operations"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "276d34e1",
+   "metadata": {},
+   "source": [
+    "Numpy is a general-purpose array-processing package. It provides a high-performance multidimensional array object, and tools for working with these arrays. It is the fundamental package for scientific computing with Python.\n",
+    "\n",
+    "Array in Numpy is a table of elements (usually numbers), all of the same type, indexed by a tuple of positive integers. In Numpy, number of dimensions of the array is called rank of the array.A tuple of integers giving the size of the array along each dimension is known as shape of the array. An array class in Numpy is called as ndarray. Elements in Numpy arrays are accessed by using square brackets and can be initialized by using nested Python Lists."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "d0bf5bf2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\n",
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "id": "fb086acc",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Array is of type:  <class 'numpy.ndarray'>\n",
+      "No. of dimensions:  2\n",
+      "Shape of array:  (2, 3)\n",
+      "Size of array:  6\n",
+      "Array stores elements of type:  int32\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Creating array object \n",
+    "arr = np.array( [[ 1, 2, 3], \n",
+    "\t\t\t\t[ 4, 2, 5]] ) \n",
+    "\n",
+    "# Printing type of arr object \n",
+    "print(\"Array is of type: \", type(arr)) \n",
+    "\n",
+    "# Printing array dimensions (axes) \n",
+    "print(\"No. of dimensions: \", arr.ndim) \n",
+    "\n",
+    "# Printing shape of array \n",
+    "print(\"Shape of array: \", arr.shape) \n",
+    "\n",
+    "# Printing size (total number of elements) of array \n",
+    "print(\"Size of array: \", arr.size) \n",
+    "\n",
+    "# Printing type of elements in array \n",
+    "print(\"Array stores elements of type: \", arr.dtype) \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 67,
+   "id": "eee0ac09",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[1 2 3]\n",
+      " [4 5 6]\n",
+      " [7 8 9]]\n",
+      "[[1 3]\n",
+      " [4 6]]\n",
+      "[[ 1  2  0  4]\n",
+      " [ 2 -4  5  7]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "arr=np.array([[1,2,3],[4,5,6],[7,8,9]]) #rank 2\n",
+    "print(arr)\n",
+    "print(arr[:2,::2])\n",
+    "arr=np.array(((1,2,0,4),(2,-4,5,7)))# creating an array using tuple\n",
+    "print(arr)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 68,
+   "id": "2b09eb34",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "5\n",
+      "\n",
+      "Elements greater than 0:\n",
+      " [1 2 4 2 5 7]\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(arr[1][2])\n",
+    "# boolean array indexing example \n",
+    "cond = arr > 0 # cond is a boolean array \n",
+    "temp = arr[cond] \n",
+    "print (\"\\nElements greater than 0:\\n\", temp) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "02ad5394",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[3 7 2]\n"
+     ]
+    }
+   ],
+   "source": [
+    "index=arr[[0,1,1],[2,3,0]]#slicing the particular elements from the array at once\n",
+    "print(index)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "04abd7b3",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "Elements at indices (1, 1), (1, 2), (0, 1), (1, 0):\n",
+      " [4 5 2 2]\n"
+     ]
+    }
+   ],
+   "source": [
+    "Index_arr = arr[[1, 1, 0, 1], \n",
+    "                [1, 2, 1, 0]]\n",
+    "print (\"\\nElements at indices (1, 1), \"\n",
+    "    \"(1, 2), (0, 1), (1, 0):\\n\", Index_arr)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5dba6c9e",
+   "metadata": {},
+   "source": [
+    "Often, the element is of an array is originally unknown, but its size is known. Hence, NumPy offers several functions to create arrays with initial placeholder content. These minimize the necessity of growing arrays, an expensive operation. For example: np.zeros, np.ones, np.full, np.empty, etc."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "id": "055372e6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "An array initialized with all zeros:\n",
+      " [[0. 0. 0. 0.]\n",
+      " [0. 0. 0. 0.]\n",
+      " [0. 0. 0. 0.]]\n",
+      "An array initialized with all 6s.Array type is complex:\n",
+      " [[6.+0.j 6.+0.j 6.+0.j]\n",
+      " [6.+0.j 6.+0.j 6.+0.j]\n",
+      " [6.+0.j 6.+0.j 6.+0.j]]\n",
+      "A random array:\n",
+      " [[0.30660584 0.24843913]\n",
+      " [0.01554385 0.5117993 ]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Creating a 3X4 array with all zeros \n",
+    "c = np.zeros((3, 4)) \n",
+    "print (\"An array initialized with all zeros:\\n\", c) \n",
+    "\n",
+    "# Create a constant value array of complex type \n",
+    "d = np.full((3, 3), 6, dtype = 'complex') \n",
+    "print (\"An array initialized with all 6s.\"\n",
+    "\t\t\t\"Array type is complex:\\n\", d) \n",
+    "\n",
+    "# Create an array with random values \n",
+    "e = np.random.random((2, 2)) \n",
+    "print (\"A random array:\\n\", e)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "0b2643d6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[1 2]\n",
+      " [4 5]]\n",
+      "[[1 5]\n",
+      " [8 9]]\n",
+      "adding 1 to every element of a1\n",
+      " [[2 3]\n",
+      " [5 6]]\n",
+      "Subtractin 2 from every element of a2\n",
+      " [[-1  3]\n",
+      " [ 6  7]]\n",
+      "unary operation on a1,sum of all the elements of a1: 12\n",
+      "adding a1 and a2\n",
+      " [[ 1 10]\n",
+      " [32 45]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "a1=np.array([[1,2],[4,5]])\n",
+    "a2=np.array([[1,5],[8,9]])\n",
+    "print(a1)\n",
+    "print(a2)\n",
+    "print(\"adding 1 to every element of a1\\n\",a1+1)\n",
+    "print(\"Subtractin 2 from every element of a2\\n\",a2-2)\n",
+    "print(\"unary operation on a1,sum of all the elements of a1:\",a1.sum())\n",
+    "print(\"adding a1 and a2\\n\", a1*a2)# this is not giving matrix multiplication\n",
+    "#this way ae can add , sub divide the two arrays"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3b05ac52",
+   "metadata": {},
+   "source": [
+    "arange: This function returns evenly spaced values within a given interval. Step size is specified."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "id": "a780466e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "A sequential array with steps of 5:\n",
+      " [ 0  5 10 15 20 25]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Create a sequence of integers \n",
+    "# from 0 to 30 with steps of 5 \n",
+    "f = np.arange(0, 30, 5) \n",
+    "print (\"A sequential array with steps of 5:\\n\", f)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b908be28",
+   "metadata": {},
+   "source": [
+    " linspace: It returns evenly spaced values within a given interval."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "id": "77dcb3a7",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "A sequential array with 10 values between \"0 and 5\":\n",
+      " [0.         0.55555556 1.11111111 1.66666667 2.22222222 2.77777778\n",
+      " 3.33333333 3.88888889 4.44444444 5.        ]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Create a sequence of 10 values in range 0 to 5 \n",
+    "g = np.linspace(0, 5, 10) \n",
+    "print (\"A sequential array with 10 values between \\\"0 and 5\\\":\\n\", g)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cfe1a74d",
+   "metadata": {},
+   "source": [
+    "Reshaping an array in Python means changing the shape of an array without changing its contents. It is a common operation performed when working with arrays in Python. By reshaping, we can add or remove dimensions or change the number of elements in each dimension "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 64,
+   "id": "fcbe3811",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[1 2 3]\n",
+      " [4 5 2]\n",
+      " [4 2 1]\n",
+      " [2 0 1]]\n",
+      "---------------\n",
+      "Original array:\n",
+      " [[1 2 3 4]\n",
+      " [5 2 4 2]\n",
+      " [1 2 0 1]]\n",
+      "---------------\n",
+      "Reshaped array:\n",
+      " [[[1 2 3]\n",
+      "  [4 5 2]]\n",
+      "\n",
+      " [[4 2 1]\n",
+      "  [2 0 1]]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Reshaping 3X4 array to 2X2X3 array \n",
+    "arr = np.array([[1, 2, 3, 4], \n",
+    "\t\t\t\t[5, 2, 4, 2], \n",
+    "\t\t\t\t[1, 2, 0, 1]]) \n",
+    "\n",
+    "newarr = arr.reshape(2, 2, 3) # it gives 2 arrays of shape 2*3(number of arrays,rows,columns)\n",
+    "arr1=arr.reshape(4,3)  # reshaping the array into 4 rows and 3 columns\n",
+    "print(arr1)\n",
+    "print(\"---------------\")\n",
+    "print (\"Original array:\\n\", arr) \n",
+    "print(\"---------------\") \n",
+    "print (\"Reshaped array:\\n\", newarr)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "113161e6",
+   "metadata": {},
+   "source": [
+    "'C': Flattens array elements into row-major order (C-style).\n",
+    "'F': Flattens array elements into column-major order (Fortran-style).\n",
+    "'A': Flattens array elements in column-major order if the array is Fortran contiguous in memory or row-major otherwise.\n",
+    "'K': Flattens array elements in the order the elements occur in memory."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "id": "9530b4e6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[1 2 3 4]\n",
+      " [2 4 5 7]]\n",
+      "[1 2 2 4 3 5 4 7]\n"
+     ]
+    }
+   ],
+   "source": [
+    "flatten=arr.flatten(order=\"f\")\n",
+    "print(arr)\n",
+    "print(flatten)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "13b9e6a9",
+   "metadata": {},
+   "source": [
+    "# dtypes in numpy array"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fb8f1da1",
+   "metadata": {},
+   "source": [
+    "Every ndarray has an associated data type (dtype) object. This data type object (dtype) provides information about the layout of the array. The values of an ndarray are stored in a buffer which can be thought of as a contiguous block of memory bytes which can be interpreted by the dtype object. Numpy provides a large set of numeric datatypes that can be used to construct arrays. At the time of Array creation, Numpy tries to guess a datatype, but functions that construct arrays usually also include an optional argument to explicitly specify the datatype."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "36b3edfa",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Integer Datatype: \n",
+      "int32\n",
+      "\n",
+      "Float Datatype: \n",
+      "float64\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Integer datatype\n",
+    "# guessed by Numpy\n",
+    "x = np.array([1, 2])  \n",
+    "print(\"Integer Datatype: \")\n",
+    "print(x.dtype)         \n",
+    " \n",
+    "# Float datatype\n",
+    "# guessed by Numpy\n",
+    "x = np.array([1.0, 2.0]) \n",
+    "print(\"\\nFloat Datatype: \")\n",
+    "print(x.dtype) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "f525e494",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[1 2]\n",
+      "int64\n"
+     ]
+    }
+   ],
+   "source": [
+    "# forced datatype\n",
+    "a=np.array([1,2],dtype=np.int64)\n",
+    "print(a)\n",
+    "print(a.dtype)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f5586a3d",
+   "metadata": {},
+   "source": [
+    "# math operations on numpy array"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "id": "4e46e684",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[4. 7.]\n",
+      " [2. 6.]]\n",
+      "----------------------------------------\n",
+      "[[3. 6.]\n",
+      " [2. 8.]]\n",
+      "----------------------------------------\n",
+      "Addition of two arrays\n",
+      " [[ 7. 13.]\n",
+      " [ 4. 14.]]\n",
+      "----------------------------------------\n",
+      "Addition of Array elements: \n",
+      "19.0\n",
+      "----------------------------------------\n",
+      "sraureroot of array 1:\n",
+      " [[2.         2.64575131]\n",
+      " [1.41421356 2.44948974]]\n",
+      "----------------------------------------\n",
+      "Transpose of array 2:\n",
+      " [[3. 2.]\n",
+      " [6. 8.]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# First Array\n",
+    "arr1 = np.array([[4, 7], [2, 6]], \n",
+    "                 dtype = np.float64)\n",
+    "                  \n",
+    "# Second Array\n",
+    "arr2 = np.array([[3, 6], [2, 8]], \n",
+    "                 dtype = np.float64) \n",
+    "print(arr1)\n",
+    "print(\"-\"*40)\n",
+    "print(arr2)\n",
+    "print(\"-\"*40)\n",
+    "print(\"Addition of two arrays\\n\",np.add(arr1,arr2))\n",
+    "print(\"-\"*40)\n",
+    "# Addition of all Array elements\n",
+    "# using predefined sum method\n",
+    "Sum1 = np.sum(arr1)\n",
+    "print(\"Addition of Array elements: \")\n",
+    "print(Sum1)\n",
+    "print(\"-\"*40)\n",
+    "print(\"sraureroot of array 1:\\n\",np.sqrt(arr1))\n",
+    "print(\"-\"*40)\n",
+    "print(\"Transpose of array 2:\\n\",arr2.T)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 69,
+   "id": "4ee47954",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Largest element is: 9\n",
+      "Row-wise maximum elements: [6 7 9]\n",
+      "Column-wise minimum elements: [1 1 2]\n",
+      "Sum of all array elements: 38\n",
+      "Cumulative sum along each row:\n",
+      " [[ 1  6 12]\n",
+      " [ 4 11 13]\n",
+      " [ 3  4 13]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Python program to demonstrate \n",
+    "# unary operators in numpy \n",
+    "import numpy as np \n",
+    "\n",
+    "arr = np.array([[1, 5, 6], \n",
+    "\t\t\t\t[4, 7, 2], \n",
+    "\t\t\t\t[3, 1, 9]]) \n",
+    "\n",
+    "# maximum element of array \n",
+    "print (\"Largest element is:\", arr.max()) \n",
+    "print (\"Row-wise maximum elements:\", \n",
+    "\t\t\t\t\tarr.max(axis = 1)) \n",
+    "\n",
+    "# minimum element of array \n",
+    "print (\"Column-wise minimum elements:\", \n",
+    "\t\t\t\t\t\tarr.min(axis = 0)) \n",
+    "\n",
+    "# sum of array elements \n",
+    "print (\"Sum of all array elements:\", \n",
+    "\t\t\t\t\t\t\tarr.sum()) \n",
+    "\n",
+    "# cumulative sum along each row \n",
+    "print (\"Cumulative sum along each row:\\n\", \n",
+    "\t\t\t\t\t\tarr.cumsum(axis = 1)) \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 70,
+   "id": "11a7192d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Array sum:\n",
+      " [[5 5]\n",
+      " [5 5]]\n",
+      "Array multiplication:\n",
+      " [[4 6]\n",
+      " [6 4]]\n",
+      "Matrix multiplication:\n",
+      " [[ 8  5]\n",
+      " [20 13]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Python program to demonstrate \n",
+    "# binary operators in Numpy \n",
+    "import numpy as np \n",
+    "\n",
+    "a = np.array([[1, 2], \n",
+    "\t\t\t[3, 4]]) \n",
+    "b = np.array([[4, 3], \n",
+    "\t\t\t[2, 1]]) \n",
+    "\n",
+    "# add arrays \n",
+    "print (\"Array sum:\\n\", a + b) \n",
+    "\n",
+    "# multiply arrays (elementwise multiplication) \n",
+    "print (\"Array multiplication:\\n\", a*b) \n",
+    "\n",
+    "# matrix multiplication \n",
+    "print (\"Matrix multiplication:\\n\", a.dot(b)) \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3122e4ca",
+   "metadata": {},
+   "source": [
+    "NumPy provides familiar mathematical functions such as sin, cos, exp, etc. These functions also operate elementwise on an array, producing an array as output.\n",
+    "\n",
+    "Note: All the operations we did above using overloaded operators can be done using ufuncs like np.add, np.subtract, np.multiply, np.divide, np.sum, etc. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 71,
+   "id": "96803357",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Sine values of array elements: [0.0000000e+00 1.0000000e+00 1.2246468e-16]\n",
+      "Exponent of array elements: [ 1.          2.71828183  7.3890561  20.08553692]\n",
+      "Square root of array elements: [0.         1.         1.41421356 1.73205081]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Python program to demonstrate \n",
+    "# universal functions in numpy \n",
+    "import numpy as np \n",
+    "\n",
+    "# create an array of sine values \n",
+    "a = np.array([0, np.pi/2, np.pi]) \n",
+    "print (\"Sine values of array elements:\", np.sin(a)) \n",
+    "\n",
+    "# exponential values \n",
+    "a = np.array([0, 1, 2, 3]) \n",
+    "print (\"Exponent of array elements:\", np.exp(a)) \n",
+    "\n",
+    "# square root of array values \n",
+    "print (\"Square root of array elements:\", np.sqrt(a)) \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 73,
+   "id": "6bcb5487",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Array elements in sorted order:\n",
+      " [-1  0  1  2  3  4  4  5  6]\n",
+      "Row-wise sorted array:\n",
+      " [[ 1  2  4]\n",
+      " [ 3  4  6]\n",
+      " [-1  0  5]]\n",
+      "Column wise sort by applying merge-sort:\n",
+      " [[ 0 -1  2]\n",
+      " [ 1  4  5]\n",
+      " [ 3  4  6]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Python program to demonstrate sorting in numpy \n",
+    "import numpy as np \n",
+    "\n",
+    "a = np.array([[1, 4, 2], \n",
+    "\t\t\t\t[3, 4, 6], \n",
+    "\t\t\t[0, -1, 5]]) \n",
+    "\n",
+    "# sorted array \n",
+    "print (\"Array elements in sorted order:\\n\", \n",
+    "\t\t\t\t\tnp.sort(a, axis = None)) \n",
+    "\n",
+    "# sort array row-wise \n",
+    "print (\"Row-wise sorted array:\\n\", \n",
+    "\t\t\t\tnp.sort(a, axis = 1)) \n",
+    "\n",
+    "# specify sort algorithm \n",
+    "print (\"Column wise sort by applying merge-sort:\\n\", \n",
+    "\t\t\tnp.sort(a, axis = 0, kind = 'mergesort')) \n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "661ed102",
+   "metadata": {},
+   "source": [
+    "# structured array"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6a5fbb44",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Example to show sorting of structured array \n",
+    "# set alias names for dtypes \n",
+    "dtypes = [('name', 'S10'), ('grad_year', int), ('cgpa', float)] \n",
+    "\n",
+    "# Values to be put in array \n",
+    "values = [('Hrithik', 2009, 8.5), ('Ajay', 2008, 8.7), \n",
+    "\t\t('Pankaj', 2008, 7.9), ('Aakash', 2009, 9.0)] \n",
+    "\t\t\t\n",
+    "# Creating array \n",
+    "arr = np.array(values, dtype = dtypes) \n",
+    "print (\"\\nArray sorted by names:\\n\", \n",
+    "\t\t\tnp.sort(arr, order = 'name')) \n",
+    "\t\t\t\n",
+    "print (\"Array sorted by graduation year and then cgpa:\\n\", \n",
+    "\t\t\t\tnp.sort(arr, order = ['grad_year', 'cgpa'])) \n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
